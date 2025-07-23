@@ -1,0 +1,107 @@
+@startuml
+title Diagrama de clases — Sistema Vacacional con Gestión de Administradores
+
+package "modelo" {
+    class Curso {
+        - id: int
+        - nombre: String
+        - horario: String
+        + getId(): int
+        + getNombre(): String
+        + getHorario(): String
+    }
+
+    class Inscripcion {
+        - nombre: String
+        - apellido: String
+        - edad: int
+        - telefono: String
+        - curso: Curso
+        + getNombreCompleto(): String
+        + getCurso(): Curso
+        + getDatos(): String
+    }
+}
+
+package "controlador" {
+    class ControladorCurso {
+        + agregarCurso(c: Curso)
+        + eliminarCurso(nombre: String)
+        + obtenerCursos(): List<Curso>
+    }
+
+    class ControladorInscripcion {
+        + agregarInscripcion(i: Inscripcion)
+        + eliminarInscripcion(nombreCompleto: String)
+        + obtenerInscripciones(): List<Inscripcion>
+    }
+}
+
+package "persistencia" {
+    class ConexionDB {
+        + conectar(): Connection
+        <<JDBC>>
+    }
+}
+
+package "vista" {
+    class Main {
+        + main(String[]): void
+        <<Lanzador del sistema>>
+    }
+
+    class Inicio {
+        + JFrame principal
+        + Botones para Usuario y Administrador
+        + Navega hacia LoginAdmin o UsuarioForm
+    }
+
+    class LoginAdmin {
+        - txtUsuario: JTextField
+        - txtClave: JPasswordField
+        + Verifica usuario desde tabla administrador en MySQL
+        + Accede a PanelAdmin si la validación es correcta
+    }
+
+    class PanelAdmin {
+        + Botones para gestión de cursos e inscripciones
+        + Accede a GestionAdmin para usuarios admin
+    }
+
+    class CursosForm {
+        - txtNombre: JTextField
+        - txtHorario: JTextField
+        + Guarda cursos nuevos en la base
+    }
+
+    class UsuarioForm {
+        - txtNombre, txtApellido, txtEdad, txtTelefono: JTextField
+        - comboCursos: JComboBox
+        + Registra inscripciones vinculadas a cursos
+    }
+
+    class GestionAdmin {
+        - txtUsuario: JTextField
+        - txtClave, txtConfirmar: JPasswordField
+        + Crea y elimina usuarios administradores
+        + Guarda credenciales en tabla administrador
+    }
+}
+
+Curso <-- Inscripcion : usa
+Inscripcion --> ControladorInscripcion : es gestionada por
+Curso --> ControladorCurso : es gestionado por
+ControladorCurso --> ConexionDB
+ControladorInscripcion --> ConexionDB
+GestionAdmin --> ConexionDB
+LoginAdmin --> ConexionDB
+
+Main --> Inicio
+Inicio --> LoginAdmin
+Inicio --> UsuarioForm
+LoginAdmin --> PanelAdmin
+PanelAdmin --> GestionAdmin
+UsuarioForm --> ControladorInscripcion
+CursosForm --> ControladorCurso
+
+@enduml
