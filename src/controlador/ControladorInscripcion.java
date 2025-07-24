@@ -24,7 +24,7 @@ public class ControladorInscripcion {
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("❌ Error al guardar inscripción: " + e.getMessage());
+            System.out.println("Error al guardar inscripción: " + e.getMessage());
         }
     }
 
@@ -38,7 +38,7 @@ public class ControladorInscripcion {
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("❌ Error al eliminar inscripción: " + e.getMessage());
+            System.out.println("Error al eliminar inscripción: " + e.getMessage());
         }
     }
 
@@ -71,7 +71,7 @@ public class ControladorInscripcion {
             }
 
         } catch (SQLException e) {
-            System.out.println("❌ Error al obtener inscripciones: " + e.getMessage());
+            System.out.println("Error al obtener inscripciones: " + e.getMessage());
         }
 
         return lista;

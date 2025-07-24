@@ -19,7 +19,7 @@ public class ControladorCurso {
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("❌ Error al agregar curso: " + e.getMessage());
+            System.out.println("Error al agregar curso: " + e.getMessage());
         }
     }
 
@@ -33,7 +33,7 @@ public class ControladorCurso {
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("❌ Error al eliminar curso: " + e.getMessage());
+            System.out.println("Error al eliminar curso: " + e.getMessage());
         }
     }
 
@@ -53,7 +53,7 @@ public class ControladorCurso {
             }
 
         } catch (SQLException e) {
-            System.out.println("❌ Error al obtener cursos: " + e.getMessage());
+            System.out.println("Error al obtener cursos: " + e.getMessage());
         }
 
         return listaCursos;
